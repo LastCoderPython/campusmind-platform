@@ -9,6 +9,7 @@ import './App.css'
 function App() {
   const [showScreeningModal, setShowScreeningModal] = React.useState<boolean>(false)
   const [currentPage, setCurrentPage] = React.useState<string>('home')
+  const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
 
   const handleStartScreening = () => {
     setShowScreeningModal(true)
@@ -18,9 +19,30 @@ function App() {
   const handleNavigate = (page: string) => {
     setCurrentPage(page)
     setShowScreeningModal(false) // Close any open modals
+    setShowMobileMenu(false) // Close mobile menu when navigating
     // Scroll to top when navigating
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  // Add hamburger menu toggle function
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu)
+  }
+
+  // Close mobile menu when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement
+      if (showMobileMenu && !target.closest('.nav') && !target.closest('.mobile-menu-btn')) {
+        setShowMobileMenu(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showMobileMenu])
 
   // Render different pages based on currentPage state
   const renderCurrentPage = () => {
@@ -311,13 +333,12 @@ function App() {
       {/* Header */}
       <header className="header">
         <div className="container">
-          {/* Top row: Logo and Start Screening button */}
+          {/* Top row: Logo, Hamburger, and Start Screening button */}
           <div style={{ 
             display: 'flex', 
             justifyContent: 'space-between', 
             alignItems: 'center', 
-            width: '100%',
-            marginBottom: '16px'
+            width: '100%'
           }}>
             <div className="logo" onClick={() => handleNavigate('home')}>
               <div className="logo-icon">
@@ -329,13 +350,64 @@ function App() {
               </div>
             </div>
 
+            {/* Mobile Hamburger Button - only visible on mobile */}
+            <button 
+              className="mobile-menu-btn"
+              onClick={toggleMobileMenu}
+              style={{
+                display: 'none', // Hidden on desktop
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px',
+                borderRadius: '6px',
+                transition: 'background 0.2s'
+              }}
+            >
+              <div style={{ 
+                width: '24px', 
+                height: '18px', 
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+              }}>
+                <span style={{
+                  width: '100%',
+                  height: '2px',
+                  backgroundColor: '#374151',
+                  borderRadius: '1px',
+                  transition: 'all 0.3s',
+                  transformOrigin: 'center',
+                  transform: showMobileMenu ? 'rotate(45deg) translateY(8px)' : 'rotate(0)'
+                }}></span>
+                <span style={{
+                  width: '100%',
+                  height: '2px',
+                  backgroundColor: '#374151',
+                  borderRadius: '1px',
+                  transition: 'all 0.3s',
+                  opacity: showMobileMenu ? '0' : '1'
+                }}></span>
+                <span style={{
+                  width: '100%',
+                  height: '2px',
+                  backgroundColor: '#374151',
+                  borderRadius: '1px',
+                  transition: 'all 0.3s',
+                  transformOrigin: 'center',
+                  transform: showMobileMenu ? 'rotate(-45deg) translateY(-8px)' : 'rotate(0)'
+                }}></span>
+              </div>
+            </button>
+
             <button onClick={handleStartScreening} className="btn btn-primary">
               Start Screening
             </button>
           </div>
 
-          {/* Navigation menu - now mobile friendly */}
-          <nav className="nav">
+          {/* Navigation menu - collapsible on mobile */}
+          <nav className={`nav ${showMobileMenu ? 'nav-mobile-open' : ''}`}>
             <a 
               href="#" 
               onClick={(e) => { e.preventDefault(); handleNavigate('home'); }}
