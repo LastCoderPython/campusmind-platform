@@ -3,7 +3,7 @@ import { Brain, Shield, Heart, Users, ArrowRight, Clock, Calendar, BookOpen, Bar
 import ResourcesPage from './components/ResourcesPage'
 import PeerSupportPage from './components/PeerSupportPage'
 import BookingPage from './components/BookingPage'
-
+import ChatbotModal from './components/ChatbotModal'
 import './App.css'
 
 function App() {
@@ -445,47 +445,11 @@ function App() {
         {renderCurrentPage()}
       </main>
       
-      {/* Screening Modal */}
-      {showScreeningModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h2 style={{ margin: 0 }}>🧠 CampusMind Screening</h2>
-              <button 
-                onClick={() => setShowScreeningModal(false)}
-                style={{ 
-                  background: 'none', 
-                  border: 'none', 
-                  fontSize: '24px', 
-                  cursor: 'pointer',
-                  color: '#6b7280'
-                }}
-              >
-                ×
-              </button>
-            </div>
-            <p>
-              Your BotPenguin chatbot will be embedded here once it's ready. This will provide the complete PHQ-9 mental health assessment.
-            </p>
-            <div className="info-box">
-              <p>
-                🔒 Completely anonymous • 🧠 Clinically validated • ⚡ Instant results • 🏥 Crisis intervention
-              </p>
-            </div>
-            <div style={{ textAlign: 'center', padding: '40px', background: '#f9fafb', borderRadius: '12px', margin: '20px 0' }}>
-              <Brain size={48} color="#2563eb" style={{ marginBottom: '16px' }} />
-              <p style={{ color: '#6b7280', margin: 0 }}>BotPenguin Integration Ready</p>
-              <p style={{ color: '#9ca3af', fontSize: '14px', margin: '8px 0 0 0' }}>Chatbot will appear here automatically</p>
-            </div>
-            <button 
-              onClick={() => setShowScreeningModal(false)}
-              className="btn btn-primary"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Screening Modal - New Chatbot Integration */}
+      <ChatbotModal 
+        isOpen={showScreeningModal} 
+        onClose={() => setShowScreeningModal(false)} 
+      />
     </div>
   )
 }

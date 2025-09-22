@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CampusMind - Mental Wellness Platform</title>
+    <meta name="description" content="Anonymous mental health support for Jammu & Kashmir students" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- BotPenguin Chatbot Script -->
+    <script src="https://app.botpenguin.com/webchat/plugin.js" defer></script>
+    <script>
+      // BotPenguin will be initialized by the ChatbotModal component
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('BotPenguin script loaded successfully');
+        
+        // Make BotPenguin available globally
+        if (typeof window.botpenguin === 'undefined') {
+          console.warn('BotPenguin not loaded yet - will retry when modal opens');
+        } else {
+          console.log('BotPenguin is ready!');
+        }
+      });
+    </script>
+  </body>
+</html>
