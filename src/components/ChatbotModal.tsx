@@ -10,14 +10,24 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
   
   useEffect(() => {
     if (isOpen) {
-      // BotPenguin modern integration
+      // Remove any existing BotPenguin elements first
+      const existingScript = document.getElementById('messenger-widget-b');
+      if (existingScript) {
+        existingScript.remove();
+      }
+      const existingBot = document.querySelector('botpenguin-root');
+      if (existingBot) {
+        existingBot.remove();
+      }
+      
+      // Create BotPenguin script with correct format
       const script = document.createElement('script');
-      script.id = 'botpenguin-chat-script';
+      script.id = 'messenger-widget-b';
       script.src = 'https://cdn.botpenguin.com/website-bot.js';
       script.defer = true;
-      script.innerHTML = '68ce9ce90f482854b717728e,68c670e1511b1c56323fc293';
+      script.textContent = '68ce9ce90f482854b717728e,68c670e1511b1c56323fc293';
       
-      // Remove loading state after script loads
+      // Hide loading after BotPenguin loads
       script.onload = () => {
         setTimeout(() => {
           const loadingElement = document.getElementById('chatbot-loading');
@@ -25,6 +35,15 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
             loadingElement.style.display = 'none';
           }
           console.log('BotPenguin chatbot loaded successfully');
+          
+          // Check if BotPenguin widget appeared
+          setTimeout(() => {
+            const widget = document.getElementById('BotPenguin-messenger');
+            if (widget) {
+              console.log('BotPenguin widget is ready!');
+            }
+          }, 1000);
+          
         }, 2000);
       };
       
@@ -32,9 +51,13 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
       
       // Cleanup when modal closes
       return () => {
-        const existingScript = document.getElementById('botpenguin-chat-script');
-        if (existingScript) {
-          existingScript.remove();
+        const scriptToRemove = document.getElementById('messenger-widget-b');
+        if (scriptToRemove) {
+          scriptToRemove.remove();
+        }
+        const botRoot = document.querySelector('botpenguin-root');
+        if (botRoot) {
+          botRoot.remove();
         }
       };
     }
