@@ -311,50 +311,60 @@ function App() {
       {/* Header */}
       <header className="header">
         <div className="container">
-          <div className="logo" onClick={() => handleNavigate('home')}>
-            <div className="logo-icon">
-              <Brain size={24} color="white" />
+          {/* Top row: Logo and Start Screening button */}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            width: '100%',
+            marginBottom: '16px'
+          }}>
+            <div className="logo" onClick={() => handleNavigate('home')}>
+              <div className="logo-icon">
+                <Brain size={24} color="white" />
+              </div>
+              <div className="logo-text">
+                <h1>CampusMind</h1>
+                <p>Mental Wellness Platform</p>
+              </div>
             </div>
-            <div className="logo-text">
-              <h1>CampusMind</h1>
-              <p>Mental Wellness Platform</p>
-            </div>
+
+            <button onClick={handleStartScreening} className="btn btn-primary">
+              Start Screening
+            </button>
           </div>
 
+          {/* Navigation menu - now mobile friendly */}
           <nav className="nav">
             <a 
               href="#" 
               onClick={(e) => { e.preventDefault(); handleNavigate('home'); }}
               style={{ color: currentPage === 'home' ? '#2563eb' : '#4b5563' }}
             >
-              Home
+              🏠 Home
             </a>
             <a 
               href="#" 
               onClick={(e) => { e.preventDefault(); handleNavigate('resources'); }}
               style={{ color: currentPage === 'resources' ? '#2563eb' : '#4b5563' }}
             >
-              Resources
+              📚 Resources
             </a>
             <a 
               href="#" 
               onClick={(e) => { e.preventDefault(); handleNavigate('peer-support'); }}
               style={{ color: currentPage === 'peer-support' ? '#2563eb' : '#4b5563' }}
             >
-              Peer Support
+              👥 Peer Support
             </a>
             <a 
               href="#" 
               onClick={(e) => { e.preventDefault(); handleNavigate('booking'); }}
               style={{ color: currentPage === 'booking' ? '#2563eb' : '#4b5563' }}
             >
-              Book Counselor
+              📅 Book Counselor
             </a>
           </nav>
-
-          <button onClick={handleStartScreening} className="btn btn-primary">
-            Start Screening
-          </button>
         </div>
       </header>
 
