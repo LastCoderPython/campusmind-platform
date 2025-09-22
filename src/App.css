@@ -1,0 +1,11 @@
+/* App.css - CampusMind Clean Styles */
+
+/* Remove default Vite styles to avoid conflicts with our custom design */
+#root {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* Keep our custom CampusMind styles in index.css */
