@@ -25,7 +25,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
       script.id = 'messenger-widget-b';
       script.src = 'https://cdn.botpenguin.com/website-bot.js';
       script.defer = true;
-      script.textContent = '68ce9ce90f482854b717728e,68c670e1511b1c56323fc293';
+      script.textContent = '68d2abc9fc90dc2132f9ccc5,68c670e1511b1c56323fc293';
       
       // Hide loading after BotPenguin loads
       script.onload = () => {
